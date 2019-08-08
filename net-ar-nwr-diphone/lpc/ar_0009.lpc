@@ -1,0 +1,27 @@
+EST_File Track
+DataType binary
+ByteOrder 01
+NumFrames 0
+NumChannels 17
+EqualSpace 0
+BreaksPresent true
+CommentChar ;
+
+Channel_0 lpc_0
+Channel_1 lpc_1
+Channel_2 lpc_2
+Channel_3 lpc_3
+Channel_4 lpc_4
+Channel_5 lpc_5
+Channel_6 lpc_6
+Channel_7 lpc_7
+Channel_8 lpc_8
+Channel_9 lpc_9
+Channel_10 lpc_10
+Channel_11 lpc_11
+Channel_12 lpc_12
+Channel_13 lpc_13
+Channel_14 lpc_14
+Channel_15 lpc_15
+Channel_16 lpc_N
+EST_Header_End

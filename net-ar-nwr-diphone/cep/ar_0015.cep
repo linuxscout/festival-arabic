@@ -1,0 +1,34 @@
+EST_File Track
+DataType binary
+ByteOrder 01
+NumFrames 0
+NumChannels 24
+EqualSpace 0
+BreaksPresent true
+CommentChar ;
+
+Channel_0 melcep_1
+Channel_1 melcep_2
+Channel_2 melcep_3
+Channel_3 melcep_4
+Channel_4 melcep_5
+Channel_5 melcep_6
+Channel_6 melcep_7
+Channel_7 melcep_8
+Channel_8 melcep_9
+Channel_9 melcep_10
+Channel_10 melcep_11
+Channel_11 melcep_N
+Channel_12 melcep_d_1
+Channel_13 melcep_d_2
+Channel_14 melcep_d_3
+Channel_15 melcep_d_4
+Channel_16 melcep_d_5
+Channel_17 melcep_d_6
+Channel_18 melcep_d_7
+Channel_19 melcep_d_8
+Channel_20 melcep_d_9
+Channel_21 melcep_d_10
+Channel_22 melcep_d_11
+Channel_23 melcep_d_N
+EST_Header_End
