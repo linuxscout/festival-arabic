@@ -5,7 +5,7 @@
 *.scm~
 *.scm#*
 .#*.scm
-festival/
-festvox/
 works/
-speech_tools/
+/speech_tools/
+/festival/
+/festvox/
