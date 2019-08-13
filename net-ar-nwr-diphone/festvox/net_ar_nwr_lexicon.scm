@@ -54,7 +54,8 @@ Basic lexicon should (must ?) have basic letters, symbols and punctuation."
 ; '("*" n (((a s) 0) ((t e) 0) ((r i1 s) 1)  ((k o) 0))))
 ;(lex.add.entry 
 ; '("%" n (((p o r) 0) ((th i e1 n) 1) ((t o) 0))))
-
+(lex.add.entry 
+ '("world" n (((p o r) 0) ((th i e1 n) 1) ((t o) 0))))
 ;; Basic punctuation must be in with nil pronunciation
 (lex.add.entry '("." punc nil))
 ;(lex.add.entry '("." nn (((p u1 n) 1) ((t o) 0))))
@@ -74,22 +75,22 @@ Basic lexicon should (must ?) have basic letters, symbols and punctuation."
 
 ;;;  Function called when word not found in lexicon
 ;;;  and you've trained letter to sound rules
-(define (net_ar_lts_function word features)
-  "(net_ar_lts_function WORD FEATURES)
-Return pronunciation of word not in lexicon."
+;(define (net_ar_lts_function word features)
+;  "(net_ar_lts_function WORD FEATURES)
+;Return pronunciation of word not in lexicon."
 
   ;; If you have nothing ...
-  (format t "Unknown word %s\n" word)
-  (list word features nil)
+  ;(format t "Unknown word %s\n" word)
+ ; (list word features nil)
 
   ;; If you have lts rules (trained or otherwise)
 ;  (if (not boundp 'net_ar_lts_rules)
 ;      (require 'net_ar_lts_rules))
-;  (let ((dword (downcase word)) (phones) (syls))
-;    (set! phones (lts_predict dword net_ar_lts_rules))
-;    (set! syls (net_ar_lex_syllabify_phstress phones))
-;    (list word features syls))
-  )
+ ; (let ((dword (downcase word)) (phones) (syls))
+ ;   (set! phones (lts_predict dword net_ar_lts_rules))
+  ;  (set! syls (net_ar_lex_syllabify_phstress phones))
+ ;   (list word features syls))
+ ; )
 
 (define (net_ar_map_modify ps)
   (cond
@@ -149,12 +150,16 @@ t if this is a syl break, nil otherwise."
            (set! syl (cons (car p) syl)))
        (set! p (cdr p)))
      (set! syls (cons (list (reverse syl) stress) syls)))
-    (reverse syls)))
+    (reverse syls))
+
+
+
 
 ;(if (probe_file (path-append net_ar_nwr::dir "festvox/lex_lts_rules.scm"))
- ;   (begin
- ;     (load (path-append net_ar_nwr::dir "festvox/lex_lts_rules.scm"))
- ;     (set! net_ar_lts_rules lex_lts_rules)))
+;   (begin
+;     (load (path-append net_ar_nwr::dir "festvox/lex_lts_rules.scm"))
+;     (set! net_ar_lts_rules lex_lts_rules)))
+)
 
     ;; utf8-sampa map based on unitran 
 ;(if (probe_file (path-append net_ar_nwr::dir "festvox/net_ar_nwr_char_phone_map.scm"))
@@ -166,7 +171,7 @@ t if this is a syl break, nil otherwise."
  ;                          "festvox/unicode_sampa_mapping.scm"))
 
     ;; utf8-indic-sampa letter based one
-;    (define (net_ar_lts_function word features)
+;   (define (net_ar_lts_function word features)
 ;      "(net_ar_lts_function WORD FEATURES)
 ;Return pronunciation of word not in lexicon."
  ;     (let ((dword word) (phones) (syls) (aphones))
@@ -276,29 +281,28 @@ finallist)
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-; ;;;  Function called when word not found in lexicon
-; (define (net_ar_lts_function word features)
-;   "(net_ar_lts_function WORD FEATURES)
-; Return pronunciation of word not in lexicon."
-;   (format stderr "failed to find pronunciation for %s\n" word)
-;   (let ((dword (downcase word)))
-;     ;; Note you may need to use a letter to sound rule set to do
-;     ;; casing if the language has non-ascii characters in it.
-;     (if (lts.in.alphabet word 'net_ar)
-; 	(list
-; 	 word
-; 	 features
-; 	 ;; This syllabification is almost certainly wrong for
-; 	 ;; this language (its not even very good for English)
-; 	 ;; but it will give you something to start off with
-; 	 (lex.syllabify.phstress
-; 	   (lts.apply word 'net_ar)))
-; 	(begin
-; 	  (format stderr "unpronouncable word %s\n" word)
-; 	  ;; Put in a word that means "unknown" with its pronunciation
-; 	  '("nepoznat" nil (((N EH P) 0) ((AO Z) 0) ((N AA T) 0))))))
-; )
-
+ ;;;  Function called when word not found in lexicon
+ (define (net_ar_lts_function word features)
+   "(net_ar_lts_function WORD FEATURES)
+ Return pronunciation of word not in lexicon."
+   ;(format stderr "failed to find pronunciation for %s\n" word)
+   (let ((dword (downcase word)))
+     ;; Note you may need to use a letter to sound rule set to do
+     ;; casing if the language has non-ascii characters in it.
+     (if (lts.in.alphabet word 'net_ar)
+ 	(list
+ 	 word
+ 	 features
+ 	 ;; This syllabification is almost certainly wrong for
+ 	 ;; this language (its not even very good for English)
+ 	 ;; but it will give you something to start off with
+ 	 (lex.syllabify.phstress
+ 	   (lts.apply word 'net_ar)))
+	(begin
+	  (format stderr "unpronouncable word %s\n" word)
+	  ;; Put in a word that means "unknown" with its pronunciation
+	  '("majhool" nil (((m a j) 0) ((h u:) 0) ((l) 0))))))
+)
 ; ;; You may or may not be able to write a letter to sound rule set for
 ; ;; your language.  If its largely lexicon based learning a rule
 ; ;; set will be better and easier that writing one (probably).
@@ -308,6 +312,61 @@ finallist)
 ;  (
 ;   ;; LTS rules 
 ;   ))
+(lts.ruleset
+net_ar
+( (EmphCons s t d z) )
+(
+;; LTS rules
+;; Emphatic vowels
+;( EmphCons % [ aa ] = aa. )
+;( EmphCons % [ a ] = ah )
+;( EmphCons % [ i ] = ih )
+;( EmphCons % [ u ] = uh )
+;( EmphCons % [ A ] = ah: )
+;( EmphCons % [ I ] = ih: )
+;( EmphCons % [ U ] = uh: )
+;; Vowels
+( [ a ] = a)
+;([a]=a)
+([ i ] = i)
+([ u ] = u)
+([ A ] = a:)
+([ I ] = i:)
+([ U ] = u:)
+;; Emphatic Consonants
+( [ s % ] = sa)
+( [ t % ] = ta )
+( [ d % ] = da )
+( [ z % ] = zh )
+;;Consonants
+([ ? ] = ?)
+([ b ] = b)
+([ t ] = t)
+([ T ] = th)
+([ Z ] = j)
+([ X ] = ha)
+([ x ] = kh)
+([ d ] = d)
+([ D ] = dh)
+([ r ] = r)
+([ z ] = z)
+([ s ] = s)
+([ S ] = sh)
+([ H ] = E)
+([ G ] = gh)
+([ f ] = f)
+([ q ] = q)
+([ k ] = k)
+([ l ] = l)
+([ m ] = m)
+([ n ] = n)
+([ h ] = h)
+([ w ] = w)
+([ y ] = y)
+([ g ] = g)
+([ p ] = p)
+([ v ] = v)
+))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -333,10 +392,11 @@ A postlexical rule form correcting phenomena over word boundaries."
 
 (lex.create "net_ar")
 (lex.set.phoneset "net_ar")
-;(lex.set.lts.method 'net_ar_lts_function)
+(lex.set.lts.method 'net_ar_lts_function)
+;(lex.set.lts.method 'lts_rules)
 ;(if (probe_file (path-append net_ar_nwr::dir "festvox/net_ar_lex.out"))
-;    (lex.set.compile.file (path-append net_ar_nwr::dir 
-;                                       "festvox/net_ar_lex.out")))
+ ;   (lex.set.compile.file (path-append net_ar_nwr::dir 
+ ;                                      "festvox/net_ar_lex.out")))
 ;(net_ar_addenda)
 ;(if (probe_file (path-append net_ar_nwr::dir "festvox/net_ar_addenda.scm"))
 ;    (load (path-append net_ar_nwr::dir "festvox/net_ar_addenda.scm")))

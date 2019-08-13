@@ -16,7 +16,8 @@
 ;;;
 ;;;  Authors: [The people who did the work]
 ;;;
-
+;; set debug option
+(debug_output t)
 ;;; Try to find out where we are
 (if (assoc 'net_ar_nwr_diphone voice-locations)
     (defvar net_ar_nwr_dir 

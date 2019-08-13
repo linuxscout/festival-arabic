@@ -73,12 +73,65 @@
    ;; insert the phones here, see examples in 
    ;; festival/lib/*_phones.scm
   ;; Note these features were set by awb so they are wrong !!!
-
+; copied from festival/lib/cmusphinx2_phones.scm 
 ; phone vc  vl  vh  vf  vr  ct  cp  cv
-   (a  +   l   3   3   -   0   0   0) ;; father
-   (b   -   0   0   0   0   s   l   +)
-   (s   -   0   0   0   0   f   a   -)
+   ;(aa  +   l   3   3   -   0   0   0) ;; father
+   (a  +   l   3   3   -   0   0   0) ;; father  # Fatha simple
+   (ah  +   s   3   1   -   0   0   0) ;; fat
+   (a:  +   s   3   1   -   0   0   0) ;; fat
+   (ah:  +   s   3   1   -   0   0   0) ;; fat
+
+   (i  +   s   1   1   -   0   0   0) ;; bit
+   (ih  +   l   1   1   -   0   0   0) ;; beet
+
+   (i:  +   s   1   1   -   0   0   0) ;; bit
+   (ih:  +   l   1   1   -   0   0   0) ;; beet
+   (uh  +   s   1   3   +   0   0   0) ;; full
+   (uh:  +   s   1   3   +   0   0   0) ;; full
+
    (u  +   s   1   3   +   0   0   0) ;; full
+   (u:  +   l   1   3   +   0   0   0) ;; fool
+;; consonants
+   (b   -   0   0   0   0   s   l   +)
+   (t   -   0   0   0   0   s   a   -)
+   (th  -   0   0   0   0   f   d   -)
+   (j  -   0   0   0   0   a   p   +)
+   (ha  -   0   0   0   0   f   g   -)
+   (kh   -   0   0   0   0   s   v   -)
+   (d  -   0   0   0   0   s   a   +)
+   (dh  -   0   0   0   0   f   d   +)
+
+   (r   -   0   0   0   0   r   a   +)
+   (z   -   0   0   0   0   f   a   +)
+
+   (s   -   0   0   0   0   f   a   -) ;; Seen
+   (sh  -   0   0   0   0   f   p   -) ;; Sheen
+
+   (sa   -   0   0   0   0   f   a   -) ;; SAD
+   (da  -   0   0   0   0   s   a   +) ;; Dhad
+
+   (ta   -   0   0   0   0   s   a   -)
+   (zh   -   0   0   0   0   f   a   +)
+
+   (E	+   s   2   1   -   0   0   0) ;; get
+   (g   -   0   0   0   0   s   v   +)
+
+   (f   -   0   0   0   0   f   b   -)
+   (q   -   0   0   0   0   s   v   -)
+
+   (k   -   0   0   0   0   s   v   -)
+   (l   -   0   0   0   0   l   a   +)
+   (m   -   0   0   0   0   n   l   +)
+   (n   -   0   0   0   0   n   a   +)
+
+   (h  -   0   0   0   0   f   g   -) ;; Heh 
+
+   (w   -   0   0   0   0   r   l   +)
+   (y   -   0   0   0   0   r   p   +)
+
+   (p   -   0   0   0   0   s   l   -)
+   (v   -   0   0   0   0   f   b   +)
+   (sil -   0   0   0   0   0   0   -) ; added  
   )
 )
 

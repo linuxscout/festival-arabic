@@ -39,16 +39,17 @@
 
 ;;; A diphone list for DARPAbet
 
-;(set! vowels '(a u i a: u: i:))
-(set! vowels '(a u ))
-;(set! consonants '(? b t th j H x d dh r z s sh S D T Z E G f q k l m n h w y p v g ))
-(set! consonants '(b  s ))
+;(set! vowels '(a u i a: u: i: ah uh ih ah: uh: ih:))
+(set! vowels '(a u i a: u: i:))
+;(set! vowels '(a u))
+(set! consonants '(? b t th j ha kh d dh r z s sh sa da ta zh E gh f q k l m n h w y p v g ))
+;(set! consonants '( b t th d dh r z s sh f k l m n  w y p v g ))
 (set! onset-only '())
 (set! nocvcs '())
 (set! coda-only '())
 (set! silence 'pau)
 ;; for consonant clusters
-(set! stops '(s b t))
+(set! stops '(? p b t d k g))
 (set! nasals '(n m))
 (set! liquids '(l r w y))
 (set! clusters1
@@ -287,7 +288,7 @@
 Returns a list of nonsense words as phone strings."
   (append
    (list-cvcs)  ;; consonant-vowel and vowel-consonant
-   (list-vcs)  ;; one which don't go in cvc
+  ; (list-vcs)  ;; one which don't go in cvc
    (list-cvs)  ;; 
    ;(list-vvs)  ;; vowel-vowel
    ;(list-ccs)  ;; consonant-consonant
@@ -336,8 +337,28 @@ Called before synthesizing the prompt waveforms.  Uses the KAL speakers
 ;; will (mostly) find the right types of phone when these are spoken in
 ;; actual Japanese.
 (set! nhg2radio_map
-      '((a aa)
-	(u uw)
+      '((a ae)
+	(a: ah)
+	(u uh)
+	(u: uw)
+	(i ih)
+	(i: iy)
+	(ah: ah)
+	(uh: uh)
+	(ih: ih)
+	(? aa); Hamza
+	(j jh)
+	(ha hh)
+	(kh k)
+	(sa s)
+	(da dh); dhad
+	(ta t)
+	(zh z)
+	(E aa)
+	(gh g)
+	(q k)		
+	(h hh)
+
 ))
 
 (define (Diphone_Prompt_Word utt)
