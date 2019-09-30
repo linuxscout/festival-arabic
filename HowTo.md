@@ -4,10 +4,13 @@ Created السبت 16 أغسطس 2014
 ### بناء صوت عربي مغتوح المصدر
 جربت سابق العمل على برنامج espeak وقد توصلنا فيه إلى نتائج مشجعة.
 عملنا على إسبيك كان مشجعا على الرغم من رداءة الصوت الناتج مقارنة بالنظم التجارية، قد تلقينا طلبات وتشجيعات من إخواننا المكفوفين الراغبين في الحصول على صوت عربي مفتوح المصدر، وتخفيض تكلفة استعماله.
+
 لكن طبيعة إسبيك أنّ صوته آلي، لا فكرنا أن نعمل على برنامج أقوى وهو فيستيفال festival الذي يعتمد على تخليق الصوت من ثنائيات الصوت diphones أو مقاطع.
 مثلا بَ => ديفون مكون من فونيمين هما الباء والفتحة
 ويتم تسجيل الصوت البشرين مما يجعل النتائج تكون أفضل عند تركيبها.
+
 نظام فيتسفال مفتوح المصدر يدعم بناء أصوات لهذا النظام وهو مستعمل على لينكس كما وندوز.
+.
 يقدّم نظام فيتسفال بيئة مدمجة ويستعمل لغة البرمجة  سكيم [Scheme](#المنطيق:Scheme) لبرمجة الاصوات والتحكم بها دون تعديل النظام الاساسي.
 
 تطوير الصوت في هذا النظام صعب وشاق، لذا ظهر مشروع festvox لتسهيل عملية التطوير وتقيدم وثائق مفصلة عن كل مرحلة.
@@ -32,14 +35,19 @@ Created السبت 16 أغسطس 2014
 
 
 ### تطوير صوت عربي
+
 فعلا برنامج فيستفال موثق جيدا لكن كثرة الوثائق تصيب بالارتباك مما يجعلك لا تدري من أين تبدأ.
+
 للعلم فتوثيق festvox يأتي مزوّدا بالعديد من القوالب التي تسهل عملية البناء.
+
 وأهم وثيقة حصلت عليها تبين هذه المراحل باختصار وحسب الأوامر المطلوبة
+
 creating a voice for festival speech sythesis system, mathew Hood, Rhodes University, 2004
-هذه الوثيقة موجودة في توثيق festox في قسم الأمثلة.
-يقدّم هذا المستند وثيقة جيدة في ترتيب `إنشاء صوت جديد باستعمال أدوات festvox.
-المستند يتحدث عن إنشاء صوت إنجليزي جديد، لكنه لا يتحدث عن إنشاء صوت للغة جديدة.
-أعتقد أنّ الأمر يتطلب أشياء كثيرة.
+
+- هذه الوثيقة موجودة في توثيق festox في قسم الأمثلة.
+- يقدّم هذا المستند وثيقة جيدة في ترتيب `إنشاء صوت جديد باستعمال أدوات festvox.
+- المستند يتحدث عن إنشاء صوت إنجليزي جديد، لكنه لا يتحدث عن إنشاء صوت للغة جديدة.
+- أعتقد أنّ الأمر يتطلب أشياء كثيرة.
 
 ##### مشكلة مفتوحة
 كيفية بناء جدول تحويل LTS Rules به حروف عربية أو يونيكود
@@ -82,33 +90,37 @@ creating a voice for festival speech sythesis system, mathew Hood, Rhodes Univer
 
 الخطوات
 -------
-1- أنشئ مجلدا 
-mkdir net-ar-abdo-diphone
-يتكون اسم المجلد أو الصوت من عدة أجزاء
-INST-LANG-VOICE-TYPE
-القسم INST اسم الهيئة أو المؤسسة، إذا لم تكن تابعا لمؤسسة أو هيئة، استعمل كلمة شبكة NET
-القسم lang اختصار اللغة
-القسم VOICE اسم المتكلم وهنا اسميناه عبده
-القسم Type  نوع الصوت، وقد اخترنا الصوت مركبا من ثنائيات diphone
-
+	1- أنشئ مجلدا 
+	mkdir net-ar-abdo-diphone
+	يتكون اسم المجلد أو الصوت من عدة أجزاء
+	INST-LANG-VOICE-TYPE
+	القسم INST اسم الهيئة أو المؤسسة، إذا لم تكن تابعا لمؤسسة أو هيئة، استعمل كلمة شبكة NET
+	القسم lang اختصار اللغة
+	القسم VOICE اسم المتكلم وهنا اسميناه عبده
+	القسم Type  نوع الصوت، وقد اخترنا الصوت مركبا من ثنائيات diphone
+	
 خطوة2- تجهيز القوالب
 --------------------
 
 2- نفذ الامر الآتي لتوليد ملفات القوالب داخل المجلد المذكور 
-FESTVOXDIR/src/diphones/setup-diphone net ar abdo
+	FESTVOXDIR/src/diphones/setup-diphone net ar abdo
 --------------
 
 تنبيه:
 في وثيقة ماثيو ورد خطأ وهو 
-setup-diphone_ru_us_matt
+	setup-diphone_ru_us_matt
 والصواب:
-setup-diphone ru us matt
+	setup-diphone ru us matt
 أو انه أراد تثبيت الفراغات فقط لرفع الالتباس
--------
+
+
 
 ألق نظرة على محتويات المجلد net-ar-abdo-diphone
+
 تجد أنّ festvox أضاف عددا من الملفات والقوالب والبرامج (رقع برمجية)
+
 نتعرف على بعض منها
+
 
 * bin : ملفات تنفيذية نستعملها لاحقا 
 * etc : ملفات الإعدادات سنعدّلها لإعداد ملفنا الصوتي
@@ -121,58 +133,82 @@ setup-diphone ru us matt
 ----------------------------------------------
 
 دائما داخل المجلد، نفّذ الأمر 
-festival -b FestVox/diphlist.scm FestVox/ar_schema.scm  '(diphone-gen-schema ar etc/ardiph.list)'
+
+	festival -b FestVox/diphlist.scm FestVox/ar_schema.scm  '(diphone-gen-schema ar etc/ardiph.list)'
+
 ( لاحظ أنّ ar هو للعربية ، في وثيقة ماثيو لدينا us).
 
+
 شرح هذه الخطوة:
-1- ملف الإدخال هو FestVox/ar_schema.scm
-2- ملف الإخراج هو etc/ardiph.list
+
+1. ملف الإدخال هو FestVox/ar_schema.scm
+2. ملف الإخراج هو etc/ardiph.list
+
 جرّب تنفيذ الأمر وألق نظرة على النتيجة etc/ardiph.list
 
+
 ملف etc/ardiph.list الناتج بلغة سكيم، فيه قائمة الأصوات التي ينبغي تسجيلها
-(ar_0001 pau t aa b aa b aa pau (b-aa aa-b)) 
-(ar_0002 pau t aa p aa p aa pau (p-aa aa-p)) 
-..^File ID...^pok en prompt...... ^ name of diphones being recorded
+
+	(ar_0001 pau t aa b aa b aa pau (b-aa aa-b)) 
+	(ar_0002 pau t aa p aa p aa pau (p-aa aa-p)) 
+	..^File ID...^pok en prompt...... ^ name of diphones being recorded
+	
 الصيغة فيها اسم ملف الصوت دون لاحقة، تهجئة المقطع، ووالمقطع المحدد
+
 العلامة pau تعني وقف أو سكتة
 
 **تعديل ملف الإدخال ar_schema**
-**تنبية: **سنعمل على صوت بدائي مبسط به عدد محدود من الأصوات، حتى نتمكن من إنجاز المهمة ومن ثم توسيعها، 
+
+* تنبيه: **سنعمل على صوت بدائي مبسط به عدد محدود من الأصوات، حتى نتمكن من إنجاز المهمة ومن ثم توسيعها، 
+
 سنقتصر على 
 
-* حرفين صامتين وليكونا b,s ;
+
+*  حرفين صامتين وليكونا b,s ;
 * و حرفين صائتين هما a, u
 
 
 في الملف 
-42: (set! vowels '(a u))
-43: (set! consonant '(b s))
-44: (set! no cvcs  '(b s))
+	42: (set! vowels '(a u))
+	43: (set! consonant '(b s))
+	44: (set! no cvcs  '(b s))
+	
 ننتقل إلى الدالة diphone-get-list
-383: (define (diphone-get-list)
+
+	383: (define (diphone-get-list)
 التي تحدد قائمة المقاطع التي ستولّد
-(list-vcs) ; vowel consonante 
-(list-cvs) ;  consonante  vowel
-(list-silv) ; silent vowel
-(list-silc) ; silent consonante 
-(list-vsil) ;  vowel silent
-(list-csil) ;  consonante  silent
+
+	(list-vcs) ; vowel consonante 
+	(list-cvs) ;  consonante  vowel
+	(list-silv) ; silent vowel
+	(list-silc) ; silent consonante 
+	(list-vsil) ;  vowel silent
+	(list-csil) ;  consonante  silent
+
 نستغني عن 
-(list-cvcs) ; consonante vowel consonante 
-(list-vvs) ;  vowel  vowel
-بأن نعلقها بوضع النقطة الفاصلة  (;) علامة التعليق
+
+	(list-cvcs) ; consonante vowel consonante 
+	(list-vvs) ;  vowel  vowel
+
+بأن نعلقها بوضع النقطة الفاصلة  (;) علامة التعليق.
+
 وتفريغ بعض المجموعات لاغراض تجريبية تتعلق باقتصار صوتنا الجديد المبسط، أما في صوت عادي فعلينا تحديد هذه المجموعات
-onset-only
-coda-only
-stops
-nasals
-liquids
+
+
+	onset-only
+	coda-only
+	stops
+	nasals
+	liquids
 
 بعد ذلك نطبق الامر السابق
 
-festival -b festvox/diphlist.scm festvox/ar_schema.scm '(diphone-gen-schema "ar" "etc/ardiph.list")'
+	festival -b festvox/diphlist.scm festvox/ar_schema.scm '(diphone-gen-schema "ar" "etc/ardiph.list")'
+
 لتوليد قائمة الأصوات التي علينا تسجيلها
+
 لنحصل على 21 مدخلا في ملف etc/ardiph.list 
+
 منها أربعة متعلقة ب prompts  وهي خدمة تسميع مبدئي للصوت لتسهيل تسجيله.
 
 
@@ -180,28 +216,40 @@ festival -b festvox/diphlist.scm festvox/ar_schema.scm '(diphone-gen-schema "ar"
 --------------------
 
 يحاول فيستيفال أن يقرا المقاطع التي تريدها بأحد الاصوات التي لديه ليسهل عليك تسجيلها،
+
 الصوت الذي سيستعمله للقراءة معرف في الملف festvox/ar_schema.scm   في السطر 
-325: (voice_bal_diphone)
+
+	325: (voice_bal_diphone)
+
 عند التنفيذ، إذا لم يتمكن الأمر من التعرف على (voice_bal_diphone) فالصوت غير مثبت عندك.
+
 يمكنك اختيار صوت آخر
+
 لمعرفة الأصوات المثبتة أدخل الأمر
-festival 
->(voice.list)
+
+	festival 
+	>(voice.list)
 يعطيك
-(kal_diphone en1_mbrola us1_mbrola don_diphone)
+
+	(kal_diphone en1_mbrola us1_mbrola don_diphone)
 
 عليك تثبيت هذه الأصوات من مدير التطبيقات أو بسطر الأوامر 
+
 ~~مشكلة لم تنجح هذه المرحلة~~ 
+
 ~~مشكلة في~~ 
+
 تعديل السطر رقم 328
- ``"(Diphone_Prompt_Setup)``
-``Called before synthesizing the prompt waveforms.  Uses the KAL speakers``
-``(the most standard US voice)."``
-``;(voice_nitech_us_slt_arctic_hts)``
-``(voice_kal_diphone)  ;; US male voice``
-عليك تثبيت الصوت المناسب، هنا ثبتنا عدة أصوات.
-نحتاج إلى تطابق بين الفونيمات وفونيمات الصوت الأجنبي kal_diphone كي نتمكن من تسميع النداء
-الأمر رقم 4/ تصحيح ما جاء في مذكرة ماثيو وتخصيصه للعربية.
+ ```
+ "(Diphone_Prompt_Setup)``
+Called before synthesizing the prompt waveforms.  Uses the KAL speakers
+(the most standard US voice)."
+;(voice_nitech_us_slt_arctic_hts)
+(voice_kal_diphone)  ;; US male voice
+```
+- عليك تثبيت الصوت المناسب، هنا ثبتنا عدة أصوات.
+- نحتاج إلى تطابق بين الفونيمات وفونيمات الصوت الأجنبي kal_diphone كي نتمكن من تسميع النداء
+- الأمر رقم 4/ تصحيح ما جاء في مذكرة ماثيو وتخصيصه للعربية.
 
 	festival -b festvox/diphlist.scm festvox/ar_schema.scm \
 	'(diphone-gen-waves "prompt-wav" "prompt-lab" "etc/ardiph.list")'
@@ -269,7 +317,8 @@ this->begin()
 this->value()
 المصرّف يقترح عليك ذلك، وهذا ينجح.
 2# أخطاء أخرى تتعلق بإعادة إعلان memcpy و memset ويمكن تلافي هذه الأخطاء بإضافة الإعلان التالي في الملفين المعنيين بالخطأ
-#include "string.h"
+
+		#include "string.h"
 
 
 الخطوة 8
