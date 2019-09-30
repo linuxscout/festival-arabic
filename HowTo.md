@@ -428,7 +428,8 @@ You can optionally match the power, first the files must be analysed and a mean 
 ---------------------
 قاعدة البيانات جاهزة للتجربة
 
-``festival festvox/net_ar_nwr_diphone.scm '(voice_net_ar_nwr_diphone)``'
+``festival festvox/net_ar_nwr_diphone.scm '(voice_net_ar_nwr_diphone)``
+
 مشكلة
 
 ```
