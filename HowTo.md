@@ -102,9 +102,10 @@ creating a voice for festival speech sythesis system, mathew Hood, Rhodes Univer
 خطوة2- تجهيز القوالب
 --------------------
 
-2- نفذ الامر الآتي لتوليد ملفات القوالب داخل المجلد المذكور 
+نفذ الامر الآتي لتوليد ملفات القوالب داخل المجلد المذكور 
+
 	FESTVOXDIR/src/diphones/setup-diphone net ar abdo
---------------
+
 
 تنبيه:
 في وثيقة ماثيو ورد خطأ وهو 
@@ -257,66 +258,92 @@ Called before synthesizing the prompt waveforms.  Uses the KAL speakers
 * مشكلة:
 
 ظهرت المشكلة الآتية:
-(ar_0001 "pau t aa b a b aa pau" ("b-a" "a-b"))
-Phone "a" not member of PhoneSet "radio"
-Phone a not in PhoneSet "radio"
+
+	(ar_0001 "pau t aa b a b aa pau" ("b-a" "a-b"))
+	Phone "a" not member of PhoneSet "radio"
+	Phone a not in PhoneSet "radio"
+
 بحثت عن الحل، وجدته في الرابط الآتي:
+
 <https://festvox-talk.festvox.narkive.com/qn9wShzu/my-phones-not-members-of-phoneset-radio>
+
+
 فذهبت إلى المجلد 
 [festvox/src/diphones/ja_schema.scm]()
+
 وقمت بنسخ الدالتان 
-(set! nhg2radio_map
-  '((a aa)
-(u uw)
-))
-وتقليل عددة الحروف إلى ما أحتاج إليه فقط
-ثم نسخت الدالة (define (Diphone_Prompt_Word utt) كما هي
-في ملف festvox/ar_schema.scm
-في آخر الملف ، لكن تركت السطر الأخير كما هو.
+	(set! nhg2radio_map
+	  '((a aa)
+	(u uw)
+	))
+وتقليل عددة الحروف إلى ما أحتاج إليه فقط.
+
+ثم نسخت الدالة (define (Diphone_Prompt_Word utt) كما هي في ملف festvox/ar_schema.scm في آخر الملف ، لكن تركت السطر الأخير كما هو.
 نجحت هذه المرة -07-08-2019
 
 الخطوة 5
 --------
 5- استدعاء الملفات لتسهيل التسجيل
+
 ``bin/prompt_them etc/ardiph.list``
+
 نجحت، وأنتجت ملفات في المجلد Prompt_wav
 
 الخطوة السادسة
 --------------
 بعد تسجيل كل الثنائيات، ننتقل إلى الوسم الآلي autolabel
-bin/make_labs prompt-wav/*.wav
+
+	bin/make_labs prompt-wav/*.wav
+	
 مشكلة segmentation fault، لكنها أنتجت ملفات في prompt_lab
+
 
 #### 6.1 مشكلة
 
 * عند مهمة التوسيم Labeling
-* bin/make_labs wav/*.wav
+
+	 bin/make_labs wav/*.wav
 
 
 تجد أنّ الملف يطلب وجود ملف يسمى txt.done.data
+
 وجدت في أحد المنتديات أنه يمكن استبدال الأمر ب:
-bin/make_labs etc/ardiph.list
+
+	bin/make_labs etc/ardiph.list
+
 حيث ardiph.list هو ملف فيه أسماء ملفات الأصوات المرفقة بكل مقطع صوتي، الملف مكتوب بلغة سكيم.
+
 *** في هذه المرة، لم أضطر إلى التعديلات الواردة في6.1
+
 
 ### خطوة 7
 التصحيح اليدوي للوسوم
-emulabel etc/emu_lab
+
+	emulabel etc/emu_lab
 
 #### 7.1 برنامج EMULabel
+
 ورد في منتدى الدعم الفني لبرنامج Emu speech database أن هذه الأدوات ومنها أداة emulabel لم تعد تأتي منفردة، كما أنّ البرنامج لم يعد يدعم معالجة الملفات المنفردة.
+
 قال أحدهم أنّ برنامج wavesurfer المدمج بنظام emu يمكن أن يعمل على وسم الاصوات labeling بعد وضع كل الملفات lab/*.lab و wav/*.wav  مع بعض في مجلد واحد.
 
+
 * حزمة Edenburg  speech tech التي تأتي محزومة في festival-speeck tools ناقصة، وجدت أنها تنقص ملفا تنفيذيا يسمى sigfilter نحتاج إليه في مرحلة استخلاص علامات الحدة pitchmark، مما اضطرني إلى إعادة تصريفه compiling م[ن](#المنطيق:ن) المصدر speech tools 2.1.
+
 * في المصدر بعض الأخطاء يمكن ضبطها يدويا في المصدر.
+
 * 1- أخطاء تتعلق بنطاق  namespace بعض الدوال، ينبغي أن لا تستدعى مباشرة مثل 
 
-begin()
-value()
-this->begin()
-this->value()
+
+	begin()
+	value()
+	this->begin()
+	this->value()
+
 المصرّف يقترح عليك ذلك، وهذا ينجح.
+
 2# أخطاء أخرى تتعلق بإعادة إعلان memcpy و memset ويمكن تلافي هذه الأخطاء بإضافة الإعلان التالي في الملفين المعنيين بالخطأ
+
 
 		#include "string.h"
 
@@ -325,73 +352,107 @@ this->value()
 --------
 بناء فهرس المقاطع الثنائية
 
-bin/make_diph_index etc/ardiph.list dic/nwrdiph.est
+	bin/make_diph_index etc/ardiph.list dic/nwrdiph.est
+	
 اسم nwr هو اسم صاحب الصوت المحتمل
+
 مشكلة: لا يوجد مجلد voices ولا dicts في مجلد تطوير festival
+
 لذا نسختهم من المجلد الأصلي
-cd /usr/share/festival
-cp -r voices ~/projects/festival-project/festival/lib/
-cp -r dicts/ [~/projects/festival-project/festival/lib/](file:///home/zerrouki/projects/festival-project/festival/lib)
+
+	cd /usr/share/festival
+	cp -r voices ~/projects/festival-project/festival/lib/
+	cp -r dicts/ [~/projects/festival-project/festival/lib/](file:///home/zerrouki/projects/festival-project/festival/lib)
+
 ثم أنشأت المجلد dic في مجلد العمل.
+
 مشكلة: 
-Cannot open file lab//ar_0001.lab as tokenstream
-load_relation: can't open relation input file lab//ar_0001.lab
-utt.load.relation: loading from "lab//ar_0001.lab" failed
+
+	Cannot open file lab//ar_0001.lab as tokenstream
+	load_relation: can't open relation input file lab//ar_0001.lab
+	utt.load.relation: loading from "lab//ar_0001.lab" failed
+	
 حل: 
- cp prompt-lab/* lab/
+
+	 cp prompt-lab/* lab/
 
 الخطوة 9: استخلاص علامات الحدة pitchmark
 ----------------------------------------
 
-bin/make_pm_wave wav/*.wav
+	bin/make_pm_wave wav/*.wav
+	
 هذه الخطوة تتطلب ملف etc/txt.data.done
+
 وجدت شكله في حزمة اللغة الهندية على الشكل
-( bn_00001 "অষ্টাদশ শতাব্দীর পূর্বে, বাংলা ব্যাকরণ রচনার কোন উদ্যোগ নেওয়া হয়নি।" )
-( bn_00003 "ঐ বছর তিনি চট্টগ্রাম কলেজে এফ. এ. পড়ার জন্য ভর্তি হন।" )
-لذا صعنت الملف كالآتي
-( ar_0001 "ba ab" )
-( ar_0002 "sa as" )
-( ar_0003 "bu ub" )
+
+	( bn_00001 "অষ্টাদশ শতাব্দীর পূর্বে, বাংলা ব্যাকরণ রচনার কোন উদ্যোগ নেওয়া হয়নি।" )
+	( bn_00003 "ঐ বছর তিনি চট্টগ্রাম কলেজে এফ. এ. পড়ার জন্য ভর্তি হন।" )
+	
+لذا صنعت الملف كالآتي
+
+	( ar_0001 "ba ab" )
+	( ar_0002 "sa as" )
+	( ar_0003 "bu ub" )
+	
 الملف يجرد الملفات الموجودة في المدونة الصوتية وما يقابلها من نص.
 وحسب ملاحظة في أحد المنتديات يمكن استبداله بالأمر
-bin/make_pm_wave etc/ardiph.list 
+
+	bin/make_pm_wave etc/ardiph.list 
+
 نجح الأمر
+
 ثم 
-bin/make_pm_fix pm/*.pm
+
+	bin/make_pm_fix pm/*.pm
 استبدلته بالأمر
-bin/make_pm_fix  etc/ardiph.list 
+
+	bin/make_pm_fix  etc/ardiph.list 
 
 الخطوة 10 إيجاد العوامل القوية
 ------------------------------
 
-10. You can optionally match the power, first the files must be analysed and a mean factor extracted
+You can optionally match the power, first the files must be analysed and a mean factor extracted
 
-bin/find_powerfactors lab/*.lab
+	bin/find_powerfactors lab/*.lab
+
 لم تنجح أعطت قسمة على صفر
 
-And finally you can use this to build the pitch-synchronous LPC coefficients
-bin/make_lpc wav/*.wav
+	And finally you can use this to build the pitch-synchronous LPC coefficients
+	bin/make_lpc wav/*.wav
 
 يمكن استعمال  بدلا عنها قائمة etc/ardiph.list لأن الملف يحتاج إلى etc/txt.data.done
-bin/make_lpc etc/ardiph.list
+
+	bin/make_lpc etc/ardiph.list
 
 الخطوة 11 تجربة الصوت
 ---------------------
 قاعدة البيانات جاهزة للتجربة
+
 ``festival festvox/net_ar_nwr_diphone.scm '(voice_net_ar_nwr_diphone)``'
 مشكلة
+
+```
 	SIOD ERROR: You have not yet defined a phoneset for ar (and others things ?)
 	            Define it in festvox/net_ar_nwr_phoneset.scm
+```
 
 
-### ملء  البيانات الأساشية
+### ملء  البيانات الأساسية
+
 1- تعريف phoneset في الملف festvox/net_ar_nwr_phoneset.scm
+
 نسخت أجزاء من الكود من ملف [~/workspace/projects/festival-project/festival/lib/cmusphinx2_phones.scm](file:///home/zerrouki/workspace/projects/festival-project/festival/lib/cmusphinx2_phones.scm) 
+
 ووضعتها في الملف المطلوب،
+
 ثم عليك تعليق رسالة الخطأ في السطر 43
+
 ``;(error "You have not yet defined a phoneset for ar (and others things ?)\n            Define it in festvox/net_ar_nwr_phoneset.scm\n")``
+
 2- تعريف tagger
+
 مطلوب ملف festvox/net_ar_nwr_gpos.scm
+
 نسخت الملف festival/lib/pos.scm
 
 
